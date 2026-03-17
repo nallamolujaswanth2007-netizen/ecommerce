@@ -10,8 +10,6 @@ import { useState } from "react";
 import { validateSignUp } from "../utils/validators";
 
 export default function SignUpModal({ isOpen, onClose, onSuccess }) {
-  if (!isOpen) return null;
-
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -21,6 +19,8 @@ export default function SignUpModal({ isOpen, onClose, onSuccess }) {
 
   const [errors, setErrors] = useState({});
   const [successText, setSuccessText] = useState("");
+
+  if (!isOpen) return null;
 
   function handleChange(e) {
     const { name, value } = e.target;

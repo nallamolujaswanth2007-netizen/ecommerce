@@ -12,14 +12,18 @@ import { readJSON, writeJSON } from "../services/storage";
 const KEY_CART = "shopez_cart_count";
 
 export function useCart(enabled) {
-  const [cartCount, setCartCount] = useState(0);
-
-  // On start: load from storage
-  useEffect(() => {
-    if (!enabled) return;
+  const [cartCount, setCartCount] = useState(() => {
+    if (!enabled) return 0;
     const saved = readJSON(KEY_CART, 0);
-    setCartCount(typeof saved === "number" ? saved : 0);
-  }, [enabled]);
+    return typeof saved === "number" ? saved : 0;
+  });
+
+  // On start: load from storage (no longer needed, initialized above)
+  // useEffect(() => {
+  //   if (!enabled) return;
+  //   const saved = readJSON(KEY_CART, 0);
+  //   setCartCount(typeof saved === "number" ? saved : 0);
+  // }, [enabled]);
 
   // Whenever cartCount changes: persist it
   useEffect(() => {

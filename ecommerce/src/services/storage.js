@@ -10,7 +10,7 @@ export function readJSON(key, fallbackValue) {
     const raw = localStorage.getItem(key);
     if (!raw) return fallbackValue;
     return JSON.parse(raw);
-  } catch (err) {
+  } catch {
     return fallbackValue;
   }
 }

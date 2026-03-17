@@ -16,20 +16,16 @@ import {
 } from "../services/authService";
 
 export function useAuth() {
-  const [registeredUser, setRegisteredUser] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [registeredUser, setRegisteredUser] = useState(() => getRegisteredUser());
+  const [currentUser, setCurrentUser] = useState(() => {
+    const sessionUser = getSessionUser();
+    return sessionUser;
+  });
+  const [isLoggedIn, setIsLoggedIn] = useState(() => !!getSessionUser());
 
   // On app start: load registered user + session (remember me)
   useEffect(() => {
-    const reg = getRegisteredUser();
-    setRegisteredUser(reg);
-
-    const sessionUser = getSessionUser();
-    if (sessionUser) {
-      setIsLoggedIn(true);
-      setCurrentUser(sessionUser);
-    }
+    // No need to set state here, already initialized
   }, []);
 
   function doSignUp(user) {
